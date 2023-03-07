@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    private CharacterController controller;
+   private CharacterController controller;
     private Vector3 direction;
     public float forwardSpeed;
     public Touch touch;
     public  SpawnManager spawnManager;
+    private float movefinger;
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        movefinger = 0.01f;
     }
 
     // Update is called once per frame
@@ -27,9 +29,9 @@ public class PlayerControls : MonoBehaviour
             if(touch.phase == TouchPhase.Moved)
             {
                 transform.position = new Vector3(
-                    transform.position.x + touch.deltaPosition.x * forwardSpeed,
+                    transform.position.x + touch.deltaPosition.x * movefinger,
                     transform.position.y,
-                    transform.position.z + touch.deltaPosition.y * forwardSpeed);
+                    transform.position.z);
             }
 
         }
