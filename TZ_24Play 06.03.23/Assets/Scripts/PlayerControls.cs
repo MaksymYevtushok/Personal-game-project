@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    [SerializeField] InputController inputController;
+
+    [SerializeField] private DattaTransmitter dattaTransmitter;
 
     [SerializeField] private float forwardMovementSpeed;
     [SerializeField] private float horizontalMovementSpeed;
@@ -16,7 +17,7 @@ public class PlayerControls : MonoBehaviour
     void FixedUpdate() 
     {
         SetForwardMovement();
-        SetHorizontalMovement();
+        SetHorizontalMovement(); 
     }
 
     private void SetForwardMovement()
@@ -26,7 +27,7 @@ public class PlayerControls : MonoBehaviour
 
     private void SetHorizontalMovement()
     {
-        newPositionX = transform.position.x + inputController.HorizontalValue * horizontalMovementSpeed * Time.fixedDeltaTime;
+        newPositionX = transform.position.x + dattaTransmitter.GetHorizontalValue() * horizontalMovementSpeed * Time.fixedDeltaTime;
         newPositionX = Mathf.Clamp(newPositionX, -horizontalLimitValue, horizontalLimitValue);
         transform.position = new Vector3(newPositionX, transform.position.y, transform.position.z);
     }
