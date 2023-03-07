@@ -4,48 +4,38 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-   private CharacterController controller;
-    private Vector3 direction;
-    public float forwardSpeed;
+    [SerializeField] InputController inputController;
+
+    [SerializeField] private float forwardMovementSpeed;
+    [SerializeField] private float horizontalMovementSpeed;
+    [SerializeField] private float horizontalLimitValue;
+    private float newPositionX;
     public Touch touch;
     public  SpawnManager spawnManager;
-    private float movefinger;
-    void Start()
+
+    void FixedUpdate() 
     {
-        controller = GetComponent<CharacterController>();
-        movefinger = 0.01f;
+        SetForwardMovement();
+        SetHorizontalMovement();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SetForwardMovement()
     {
-        direction.z = forwardSpeed;
-        Vector3 targetPosition = transform.position.z * transform.forward + transform.position.y * transform.up;
-
-        if(Input.touchCount > 0)
-        {
-            touch = Input.GetTouch(0);
-            
-            if(touch.phase == TouchPhase.Moved)
-            {
-                transform.position = new Vector3(
-                    transform.position.x + touch.deltaPosition.x * movefinger,
-                    transform.position.y,
-                    transform.position.z);
-            }
-
-        }
-
-
+        transform.Translate(Vector3.forward * forwardMovementSpeed * Time.fixedDeltaTime);
     }
 
-    private void FixedUpdate()
+    private void SetHorizontalMovement()
     {
-        controller.Move(direction*Time.fixedDeltaTime);
+        newPositionX = transform.position.x + inputController.HorizontalValue * horizontalMovementSpeed * Time.fixedDeltaTime;
+        newPositionX = Mathf.Clamp(newPositionX, -horizontalLimitValue, horizontalLimitValue);
+        transform.position = new Vector3(newPositionX, transform.position.y, transform.position.z);
     }
 
     private void OnTriggerEnter(Collider other) 
     {
-        spawnManager.SpawnTriggerEntered();
+        if(other.tag == "SpawnTrigger")
+        {
+           spawnManager.SpawnTriggerEntered();
+        }
     }
 }

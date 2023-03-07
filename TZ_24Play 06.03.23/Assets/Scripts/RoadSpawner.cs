@@ -6,7 +6,7 @@ using UnityEngine;
 public class RoadSpawner : MonoBehaviour
 {
     public List<GameObject> roads;
-    private float offset = 60f;
+    private float offset = 68f;
     void Start()
     {
         if(roads != null && roads.Count > 0)
@@ -20,7 +20,7 @@ public class RoadSpawner : MonoBehaviour
         GameObject moveRoad = roads[0];
         roads.Remove(moveRoad);
         float newZ = roads[roads.Count - 1].transform.position.z + offset;
-        moveRoad.transform.position = new Vector3(0, 0, newZ);
+        moveRoad.transform.position = new Vector3(3.1f, 0, newZ);
         roads.Add(moveRoad);
     }
 
