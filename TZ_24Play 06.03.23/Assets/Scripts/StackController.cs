@@ -7,6 +7,8 @@ public class StackController : MonoBehaviour
     public List<GameObject> blockList = new List<GameObject>();
     private GameObject lastBlockObject;
 
+ 
+
     private void Start()
     {
         UpdateLastBlockObject();
@@ -28,7 +30,7 @@ public class StackController : MonoBehaviour
     {
         _gameObject.transform.parent = null;
         blockList.Remove(_gameObject);
-        UpdateLastBlockObject();
+        UpdateLastBlockObject(); 
     }
 
 
@@ -36,4 +38,6 @@ public class StackController : MonoBehaviour
     {
         lastBlockObject = blockList[blockList.Count - 1];
     }
+
+    
 }
